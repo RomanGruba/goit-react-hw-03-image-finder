@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
 import styles from './PhotoCard.module.css';
+import Modal from '../Modal/Modal';
 
 export default class PhotoCard extends Component {
-  state = {};
+  state = {
+    showModal: false,
+  };
+
+  handleClick = e => {
+    this.setState({ showModal: !this.state.showModal });
+  };
 
   render() {
+    const { showModal } = this.state;
     return (
       <>
         <div className={styles.photoCard}>
-          <img src={this.props.item.webformatURL} alt="" />
+          <div className={styles.imageContainer}>
+            <img src={this.props.item.webformatURL} alt="" />
+            <button
+              type="button"
+              className={styles.fullscreenButton}
+              onClick={this.handleClick}
+            >
+              <i className="material-icons">zoom_out_map</i>
+            </button>
+          </div>
 
           <div className={styles.stats}>
             <p className={styles.statsItem}>
@@ -28,11 +45,8 @@ export default class PhotoCard extends Component {
               {this.props.item.downloads}
             </p>
           </div>
-
-          <button type="button" className={styles.fullscreenButton}>
-            <i className="material-icons">zoom_out_map</i>
-          </button>
         </div>
+        {showModal ? <Modal item={this.props.item} /> : null}
       </>
     );
   }
