@@ -4,10 +4,24 @@ import styles from './Modal.module.css';
 export default class Modal extends Component {
   state = {};
 
+  componentDidMount() {
+    window.addEventListener('keydown', this.closeOnEsc);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.closeOnEsc);
+  }
+
+  closeOnEsc = e => {
+    if (e.keyCode === 27) {
+      this.props.closeModalEsc();
+    }
+  };
+
   render() {
     return (
-      <div className="overlay">
-        <div className="modal">
+      <div className={styles.overlay} onClick={this.props.closeModal}>
+        <div className={styles.modal}>
           <img src={this.props.item.largeImageURL} alt="" />
         </div>
       </div>

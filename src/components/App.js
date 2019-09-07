@@ -11,23 +11,19 @@ export default class App extends Component {
     page: 1,
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.imagesArr !== this.state.imagesArr) {
+      const scrollHeight = window.offsetTop + window.clientHeight;
+      console.log(window.offsetTop);
+      console.log(window.clientHeight);
+      console.log(scrollHeight);
+      // window.scrollTo(0, scrollHeight);
+    }
+  }
+
   handleOnChange = e => {
     this.setState({ query: e.target.value });
   };
-
-  // handleSubmit = (query, page) => {
-  //   if (this.state.imagesArr.length > 11) {
-  //     API.fetchImages(query, page).then(res =>
-  //       this.setState(prevState => ({
-  //         imagesArr: [...prevState.imagesArr, res.data.hits],
-  //       })),
-  //     );
-  //   } else {
-  //     API.fetchImages(this.state.query, this.state.page).then(res =>
-  //       this.setState({ imagesArr: res.data.hits }),
-  //     );
-  //   }
-  // };
 
   handleSubmit = (query, page) => {
     API.fetchImages(query, page).then(res =>

@@ -8,7 +8,7 @@ const SearchForm = ({ value, onSubmit, onChange }) => {
         type="text"
         autoComplete="off"
         placeholder="Search images..."
-        value={value}
+        value={value === '' ? '' : value}
         onChange={onChange}
       />
     </form>

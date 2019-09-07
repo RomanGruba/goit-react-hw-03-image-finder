@@ -11,6 +11,18 @@ export default class PhotoCard extends Component {
     this.setState({ showModal: !this.state.showModal });
   };
 
+  closeModal = e => {
+    if (this.state.showModal === true && e.target.nodeName !== 'IMG') {
+      this.setState({ showModal: false });
+    }
+  };
+
+  closeModalEsc = e => {
+    if (this.state.showModal === true) {
+      this.setState({ showModal: false });
+    }
+  };
+
   render() {
     const { showModal } = this.state;
     return (
@@ -46,7 +58,13 @@ export default class PhotoCard extends Component {
             </p>
           </div>
         </div>
-        {showModal ? <Modal item={this.props.item} /> : null}
+        {showModal ? (
+          <Modal
+            item={this.props.item}
+            closeModal={this.closeModal}
+            closeModalEsc={this.closeModalEsc}
+          />
+        ) : null}
       </>
     );
   }
