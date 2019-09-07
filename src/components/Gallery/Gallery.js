@@ -6,7 +6,7 @@ export default class Gallery extends Component {
   state = {};
 
   render() {
-    const { items } = this.props.items;
+    const { items } = this.props;
     return (
       <ul className={styles.gallery}>
         {items.map(item => (

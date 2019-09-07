@@ -14,19 +14,6 @@ export default class App extends Component {
     isLoading: false,
   };
 
-  componentDidMount() {}
-
-  componentDidUpdate(prevProps, prevState) {
-    // if (prevState.imagesArr !== this.state.imagesArr) {
-    //   const scrollHeight = window.offsetTop + window.clientHeight;
-    //   console.log(window.offsetTop);
-    //   console.log(window.clientHeight);
-    //   console.log(scrollHeight);
-    //   // window.scrollTo(0, scrollHeight);
-    // }
-    // this.setState({ isLoading: false });
-  }
-
   handleOnChange = e => {
     this.setState({ query: e.target.value });
   };
