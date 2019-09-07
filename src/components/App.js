@@ -3,22 +3,28 @@ import styles from './App.module.css';
 import SearchForm from './SearchForm/SearchForm';
 import * as API from '../services/API';
 import Gallery from './Gallery/Gallery';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import Loader from 'react-loader-spinner';
 
 export default class App extends Component {
   state = {
     imagesArr: [],
     query: '',
     page: 1,
+    isLoading: false,
   };
 
+  componentDidMount() {}
+
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.imagesArr !== this.state.imagesArr) {
-      const scrollHeight = window.offsetTop + window.clientHeight;
-      console.log(window.offsetTop);
-      console.log(window.clientHeight);
-      console.log(scrollHeight);
-      // window.scrollTo(0, scrollHeight);
-    }
+    // if (prevState.imagesArr !== this.state.imagesArr) {
+    //   const scrollHeight = window.offsetTop + window.clientHeight;
+    //   console.log(window.offsetTop);
+    //   console.log(window.clientHeight);
+    //   console.log(scrollHeight);
+    //   // window.scrollTo(0, scrollHeight);
+    // }
+    // this.setState({ isLoading: false });
   }
 
   handleOnChange = e => {
@@ -35,9 +41,10 @@ export default class App extends Component {
 
   handleNewQuerySubmit = e => {
     e.preventDefault();
-    API.fetchImages(this.state.query, 1).then(res =>
-      this.setState({ imagesArr: res.data.hits, page: 1 }),
-    );
+    this.setState({ isLoading: true });
+    API.fetchImages(this.state.query, 1).then(res => {
+      this.setState({ imagesArr: res.data.hits, page: 1, isLoading: false });
+    });
   };
 
   loadMoreItems = e => {
@@ -50,7 +57,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { imagesArr, query } = this.state;
+    const { imagesArr, query, isLoading } = this.state;
     return (
       <div className={styles.app}>
         <SearchForm
@@ -58,7 +65,18 @@ export default class App extends Component {
           onSubmit={this.handleNewQuerySubmit}
           onChange={this.handleOnChange}
         />
-        <Gallery items={imagesArr} />
+        {isLoading ? (
+          <Loader
+            style={{ margin: '0 auto', fill: 'green' }}
+            type="Circles"
+            color="#somecolor"
+            height={80}
+            width={80}
+          />
+        ) : (
+          <Gallery items={imagesArr} />
+        )}
+
         {imagesArr.length > 11 ? (
           <button
             type="button"

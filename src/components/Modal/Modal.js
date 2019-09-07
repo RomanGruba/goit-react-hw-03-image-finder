@@ -13,7 +13,7 @@ export default class Modal extends Component {
   }
 
   closeOnEsc = e => {
-    if (e.keyCode === 27) {
+    if (e.code === 'Escape') {
       this.props.closeModalEsc();
     }
   };
