@@ -46,7 +46,7 @@ export default class App extends Component {
   render() {
     const { imagesArr, query, isLoading } = this.state;
     return (
-      <div className={styles.app}>
+      <div className={styles.app} ref={this.ulRef}>
         <SearchForm
           value={query}
           onSubmit={this.handleNewQuerySubmit}

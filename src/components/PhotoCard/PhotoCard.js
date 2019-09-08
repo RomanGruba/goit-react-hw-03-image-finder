@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styles from './PhotoCard.module.css';
 import Modal from '../Modal/Modal';
 
@@ -25,11 +26,13 @@ export default class PhotoCard extends Component {
 
   render() {
     const { showModal } = this.state;
+    const { item } = this.props;
+    const { webformatURL, likes, views, comments, downloads } = this.props.item;
     return (
       <>
         <div className={styles.photoCard}>
           <div className={styles.imageContainer}>
-            <img src={this.props.item.webformatURL} alt="" />
+            <img src={webformatURL} alt="" />
             <button
               type="button"
               className={styles.fullscreenButton}
@@ -42,25 +45,25 @@ export default class PhotoCard extends Component {
           <div className={styles.stats}>
             <p className={styles.statsItem}>
               <i className="material-icons">thumb_up</i>
-              {this.props.item.likes}
+              {likes}
             </p>
             <p className={styles.statsItem}>
               <i className="material-icons">visibility</i>
-              {this.props.item.views}
+              {views}
             </p>
             <p className={styles.statsItem}>
               <i className="material-icons">comment</i>
-              {this.props.item.comments}
+              {comments}
             </p>
             <p className={styles.statsItem}>
               <i className="material-icons">cloud_download</i>
-              {this.props.item.downloads}
+              {downloads}
             </p>
           </div>
         </div>
         {showModal ? (
           <Modal
-            item={this.props.item}
+            item={item}
             closeModal={this.closeModal}
             closeModalEsc={this.closeModalEsc}
           />
@@ -69,3 +72,14 @@ export default class PhotoCard extends Component {
     );
   }
 }
+
+PhotoCard.propTypes = {
+  item: PropTypes.shape({
+    webformatURL: PropTypes.string.isRequired,
+    largeImageURL: PropTypes.string.isRequired,
+    likes: PropTypes.number.isRequired,
+    views: PropTypes.number.isRequired,
+    comments: PropTypes.number.isRequired,
+    downloads: PropTypes.number.isRequired,
+  }).isRequired,
+};
